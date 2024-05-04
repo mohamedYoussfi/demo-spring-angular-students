@@ -1,0 +1,34 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="myDrawer.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span style="flex: auto"></span>
+  <button mat-button routerLink="/admin/home">Home</button>
+  <button mat-button routerLink="/admin/profile">Profile</button>
+  <button *ngIf="authService.roles.includes('ADMIN')" mat-button [matMenuTriggerFor]="importMenu">Import</button>
+  <mat-menu #importMenu>
+    <button mat-menu-item routerLink="/admin/loadStudents">Load Students</button>
+    <button mat-menu-item routerLink="/admin/loadPayments">Load Payments</button>
+  </mat-menu>
+  <button mat-button *ngIf="authService.isAuthenticated">
+     {{authService.username}}
+  </button>
+  <button mat-raised-button color="accent" (click)="logout()">Logout</button>
+</mat-toolbar>
+<mat-drawer-container>
+ <mat-drawer #myDrawer position="start" mode="side" opened="true">
+   <mat-list>
+     <mat-list-item>
+       <button mat-button routerLink="/admin/students">Students</button>
+     </mat-list-item>
+     <mat-list-item>
+       <button mat-button routerLink="/admin/payments">Payments</button>
+     </mat-list-item>
+   </mat-list>
+ </mat-drawer>
+  <mat-drawer-content>
+    <div style="height: 800px">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
